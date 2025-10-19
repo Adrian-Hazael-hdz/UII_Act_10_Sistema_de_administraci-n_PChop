@@ -1,0 +1,115 @@
+{% extends "fabricantes/base.html" %}
+
+{% block body %}
+<h3 class="m-4">Lista de Fabricantes</h3>
+<div class="row">
+  <div class="col-12">
+    {% if fabricantes %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Registros de Fabricantes
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID Fabricante</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">País</th>
+                <th scope="col">Sitio Web</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fab in fabricantes %}
+              <tr>
+                <td>{{ fab.Fabricante_id }}</td>
+                <td>{{ fab.Nombre }}</td>
+                <td>{{ fab.Pais }}</td>
+                <td>{{ fab.sitio_web }}</td>
+                <td><img src="{{ fab.logo_url }}" alt="Logo" width="80"></td>
+                <td>{{ fab.email }}</td>
+                <td>
+                  <!-- Botón detalles -->
+                 <button type="button" class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#view{{fab.id}}">
+                    <i class="fa-solid fa-circle-info fa-lg"></i> 
+                </button>
+
+                  <!-- Modal detalles -->
+                  <div class="modal" id="view{{fab.id}}" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">
+                            Fabricante: {{ fab.Nombre }}
+                          </h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <ul class="list-unstyled">
+                            <li>ID Fabricante: <strong>{{ fab.Fabricante_id }}</strong></li>
+                            <li>Nombre: <strong>{{ fab.Nombre }}</strong></li>
+                            <li>País: <strong>{{ fab.Pais }}</strong></li>
+                            <li>Sitio Web: <strong>{{ fab.sitio_web }}</strong></li>
+                            <li>Logo: <strong><img src="{{ fab.logo_url }}" width="150"></strong></li>
+                            <li>Email: <strong>{{ fab.email }}</strong></li>
+                          </ul>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Botón editar -->
+                  <a class="btn btn-warning me-1" href="{% url 'edit' fab.id %}">
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                  </a>
+
+                  <!-- Botón eliminar -->
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{fab.id}}">
+                    <i class="fa-solid fa-trash-can fa-lg"></i>
+                  </button>
+
+                  <!-- Modal eliminar -->
+                  <div class="modal" id="delete{{fab.id}}" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">
+                            Eliminar: {{ fab.Nombre }}
+                          </h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>¿Estás seguro de que deseas eliminar este fabricante?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <form action="{% url 'delete' fab.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-primary" value="Eliminar">
+                          </form>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <h5 class="alert alert-primary ms-4 me-4">No hay registros de fabricantes</h5>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

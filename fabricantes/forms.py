@@ -11,7 +11,7 @@ class FabricanteForm(forms.ModelForm):
             'Nombre': 'Nombre',
             'Pais': 'País',
             'sitio_web': 'Sitio Web',
-            'logo_url': 'URL del Logo',
+            'logo_url': 'URL del Logo (Opciones: monitores.png, Tarjetas_Graficas.png, perifericos.png)',
             'email': 'Correo Electrónico'
         }
         widgets = {

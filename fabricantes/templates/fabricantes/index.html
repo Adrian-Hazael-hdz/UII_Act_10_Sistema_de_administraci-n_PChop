@@ -1,5 +1,5 @@
 {% extends "fabricantes/base.html" %}
-
+{% load static %}
 {% block body %}
 <h3 class="m-4">Lista de Fabricantes</h3>
 <div class="row">
@@ -30,7 +30,7 @@
                 <td>{{ fab.Nombre }}</td>
                 <td>{{ fab.Pais }}</td>
                 <td>{{ fab.sitio_web }}</td>
-                <td><img src="{{ fab.logo_url }}" alt="Logo" width="80"></td>
+                <td><img src="{% static 'img/' %}{{ fab.logo_url }}" alt="Logo" width="80"></td>
                 <td>{{ fab.email }}</td>
                 <td>
                   <!-- Botón detalles -->
